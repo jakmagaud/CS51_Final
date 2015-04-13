@@ -1,6 +1,5 @@
 from graphics import *
 
-
 def main():
     win = GraphWin('Face', 200, 150) # give title and dimensions
 
