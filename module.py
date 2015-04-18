@@ -1,7 +1,9 @@
 #Objects
 from graphics import *
 from abc import ABCMeta, abstractmethod
+from Tkinter import *
 
+#Abstract class representing object in the world
 class WorldObject(object):
 	"""Attributes: 
 	position: tuple of ints, signifies position, (0,0) denotes top left corner
@@ -11,7 +13,7 @@ class WorldObject(object):
 	"""
 
 	__metaclass__ = ABCMeta
-	movable = false
+	movable = False
 
 	def __init__(self, xpos, ypos, color, xbox, ybox):
 		self.position = (xpos, ypos)
@@ -30,11 +32,11 @@ class WorldObject(object):
 
 class PlayerObject(WorldObject):
 	"""The player-controlled object"""
-	movable = true
+	movable = True
 	color = "Blue"
 
     def move(self):
-    	
+
 
 	def to_string(self):
 		return "Player: " + self.position
@@ -42,7 +44,7 @@ class PlayerObject(WorldObject):
 
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
-	movable = false
+	movable = False
 	color = "Black"
 
 	def to_string(self):
