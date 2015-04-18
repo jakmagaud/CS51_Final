@@ -33,6 +33,9 @@ class PlayerObject(WorldObject):
 	movable = true
 	color = "Blue"
 
+    def move(self):
+    	
+
 	def to_string(self):
 		return "Player: " + self.position
 
