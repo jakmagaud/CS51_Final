@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Objects
 from graphics import *
 from abc import ABCMeta, abstractmethod
@@ -26,6 +27,9 @@ class WorldObject(object):
 		else:
 			pass
 
+	def get_bounded_box(self):
+		return (xpos, ypos, xpos + xbox, ypos + ybox)
+
 	@abstractmethod
 	def to_string(self):
 		pass
@@ -35,8 +39,11 @@ class PlayerObject(WorldObject):
 	movable = True
 	color = "Blue"
 
-    def move(self):
+	def detect_collision(self, other):
+		if 
 
+    def move(self):
+        
 
 	def to_string(self):
 		return "Player: " + self.position

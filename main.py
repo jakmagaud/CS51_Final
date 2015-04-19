@@ -1,4 +1,6 @@
+#!/usr/bin/python
 from module import *
+from Tkinter import *
 
 #define necessary variables
 wall_count = 100
