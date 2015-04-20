@@ -1,11 +1,10 @@
 #!/usr/bin/python
 #Objects
-from graphics import *
 from abc import ABCMeta, abstractmethod
-from Tkinter import *
+import pygame
 
 #Abstract class representing object in the world
-class WorldObject(object):
+class WorldObject(pygame.sprite.Sprite):
 	"""Attributes: 
 	position: tuple of ints, signifies position, (0,0) denotes top left corner
 	color: string, signifies color
@@ -14,21 +13,9 @@ class WorldObject(object):
 	"""
 
 	__metaclass__ = ABCMeta
-	movable = False
 
-	def __init__(self, xpos, ypos, color, xbox, ybox):
-		self.position = (xpos, ypos)
-		self.color = color
-		self.boundedbox = (xbox, ybox)
-
-	def move(self):
-		if movable:
-			pass
-		else:
-			pass
-
-	def get_bounded_box(self):
-		return (xpos, ypos, xpos + xbox, ypos + ybox)
+	def __init__(self):
+		pass
 
 	@abstractmethod
 	def to_string(self):
@@ -36,24 +23,36 @@ class WorldObject(object):
 
 class PlayerObject(WorldObject):
 	"""The player-controlled object"""
-	movable = True
-	color = "Blue"
 
-	def detect_collision(self, other):
-		if 
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.image.load("player.png")
+		self.rect = self.image.get_rect()
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
+		self.speed = 5
+		self.state = "still"
+		self.movepos = [0,0]
 
-    def move(self):
-        
+	def update(self):
+		newpos = pygame.Rect.move(self.rect, self.movepos[0],self.movepos[1])
+		if self.area.contains(newpos):
+			self.rect = newpos
+		pygame.event.pump()
+
+	def move(self, dx, dy):
+		self.movepos[0] += dx
+		self.movepos[1] += dy
+		self.state = "move"
 
 	def to_string(self):
-		return "Player: " + self.position
+		return "Player: " + self.xpos + " " + self.ypos
 
 
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
-	movable = False
-	color = "Black"
+	color = (0,0,0)
 
 	def to_string(self):
-		return "Wall: " + self.position
+		return "Wall: " + self.xpos + " " + self.ypos
 
