@@ -122,18 +122,17 @@ def maze():
     length, height,  ballx, bally, lines, columns, background = addlevel(my_maze)
     # ------------------- maze --------------------------
     
-    mainloop = True
     FPS = 60      
     pygame.display.set_caption("Get Going!!!!")
  
     # Game loop
-    while mainloop:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.KEYDOWN:
-                """if event.key == pygame.K_ESCAPE:
-                    mainloop = False """
+                if event.key == pygame.K_ESCAPE:
+                    return
                 if event.key == pygame.K_UP:
                     player.move(0,-player.speed)
                 if event.key == pygame.K_DOWN:

@@ -46,13 +46,18 @@ class PlayerObject(WorldObject):
 		self.state = "move"
 
 	def to_string(self):
-		return "Player: " + self.xpos + " " + self.ypos
+		pass
 
 
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
-	color = (0,0,0)
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.image.load("wall.png")
+		self.rect = self.image.get_rect()
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
 
 	def to_string(self):
-		return "Wall: " + self.xpos + " " + self.ypos
+		pass
 
