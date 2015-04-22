@@ -5,12 +5,6 @@ import pygame
 
 #Abstract class representing object in the world
 class WorldObject(pygame.sprite.Sprite):
-	"""Attributes: 
-	position: tuple of ints, signifies position, (0,0) denotes top left corner
-	color: string, signifies color
-	movable: boolean, signifies whether object can move
-	boundedbox: tuple of ints, indicates size of box (for collision detection)
-	"""
 
 	__metaclass__ = ABCMeta
 

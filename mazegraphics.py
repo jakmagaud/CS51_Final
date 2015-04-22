@@ -91,6 +91,9 @@ def maze():
         tempblock.fill(color)
         tempblock.convert()
         return tempblock
+        
+    def detect_collision(player, other):
+        player.rect.colliderect(other.rect)
 
     def addlevel(level):
  
@@ -108,7 +111,6 @@ def maze():
             for x in range(columns):
                 if level[y][x] == "x": # wall
                     background.blit(wallblock, (length * x, height * y))
-
                     ballx = length * x
                     bally = height * y
         screen.blit(background0, (0,0))
@@ -122,11 +124,12 @@ def maze():
     length, height,  ballx, bally, lines, columns, background = addlevel(my_maze)
     # ------------------- maze --------------------------
     
-    FPS = 60      
+    clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
  
     # Game loop
     while True:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
