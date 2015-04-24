@@ -42,7 +42,6 @@ class PlayerObject(WorldObject):
 	def to_string(self):
 		pass
 
-
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
 	def __init__(self):
@@ -51,6 +50,10 @@ class WallObject(WorldObject):
 		self.rect = self.image.get_rect()
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
+
+	def update(self, player):
+		if self.rect.colliderect(player.rect) == 1:
+			print "collision!"
 
 	def to_string(self):
 		pass

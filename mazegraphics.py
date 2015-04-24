@@ -92,8 +92,8 @@ def maze():
         tempblock.convert()
         return tempblock
         
-    def detect_collision(player, other):
-        player.rect.colliderect(other.rect)
+    """def detect_collision(other):
+        player.rect.colliderect(other.rect)"""
 
     def addlevel(level):
  
@@ -103,18 +103,17 @@ def maze():
         length = screenrect.width / columns
         height = screenrect.height / lines
 
-        wallblock = createblock(length, height,(0,0,0))
+        #wallblock = createblock(length, height,(0,0,0))
 
         background = background0.copy()
  
         for y in range(lines):
             for x in range(columns):
                 if level[y][x] == "x": # wall
-                    background.blit(wallblock, (length * x, height * y))
+                    #background.blit(wallblock, (length * x, height * y))
                     ballx = length * x
                     bally = height * y
         screen.blit(background0, (0,0))
-        
  
         return length, height, ballx, bally , lines, columns, background
  
@@ -122,7 +121,6 @@ def maze():
     max_levels = len(all_levels)        
     my_maze = all_levels[0]
     length, height,  ballx, bally, lines, columns, background = addlevel(my_maze)
-    # ------------------- maze --------------------------
     
     clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
@@ -144,14 +142,23 @@ def maze():
                     player.move(player.speed,0)
                 if event.key == pygame.K_LEFT:
                     player.move(-player.speed,0)
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
                     player.state = "still"
-        
+
+        wall = WallObject()
+        wallsprite = pygame.sprite.RenderPlain(wall)
+        wall.rect.x = 0
+        wall.rect.y = 0
+
         screen.blit(background, (0,0))
+        screen.blit(background, wall.rect, wall.rect)
         playersprite.update()
         playersprite.draw(screen)
+        wallsprite.update(player)
+        wallsprite.draw(screen)
         pygame.display.flip() 
 
 if __name__ == "__main__":
