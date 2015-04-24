@@ -3,6 +3,8 @@
 """
 Wanna try escape the maze???
 """   
+from Tkinter import *
+from module import *
 
 def maze():
 
@@ -19,16 +21,17 @@ def maze():
     background0 = background.copy()
     screen.blit(background,(0,0))
  
+
+    player = PlayerObject()
+    playersprite = pygame.sprite.RenderPlain(player)
+
     ballsurface = pygame.Surface((10,10))
     ballsurface.set_colorkey((0,0,0))
     pygame.draw.circle(ballsurface,(255,0,0),(0,0),5)
     ballsurface = ballsurface.convert_alpha()
     ballrect = ballsurface.get_rect()
     background.blit(ballsurface, (5,5))
- 
-    dx = 0 
-    dy = 0 
- 
+
 
     first_level = ["xxx.xxxxxxxxxxxxxxxxxx",
                   ".s.....x..............",
@@ -88,7 +91,10 @@ def maze():
         tempblock.fill(color)
         tempblock.convert()
         return tempblock
- 
+        
+    """def detect_collision(other):
+        player.rect.colliderect(other.rect)"""
+
     def addlevel(level):
  
         lines = len(level)
@@ -96,16 +102,15 @@ def maze():
  
         length = screenrect.width / columns
         height = screenrect.height / lines
- 
-        wallblock = createblock(length, height,(20,0,50))
+
+        #wallblock = createblock(length, height,(0,0,0))
 
         background = background0.copy()
  
         for y in range(lines):
             for x in range(columns):
                 if level[y][x] == "x": # wall
-                    background.blit(wallblock, (length * x, height * y))
-
+                    #background.blit(wallblock, (length * x, height * y))
                     ballx = length * x
                     bally = height * y
         screen.blit(background0, (0,0))
@@ -116,29 +121,45 @@ def maze():
     max_levels = len(all_levels)        
     my_maze = all_levels[0]
     length, height,  ballx, bally, lines, columns, background = addlevel(my_maze)
-    # ------------------- maze --------------------------
     
-    mainloop = True
-    FPS = 60      
+    clock = pygame.time.Clock()
+    pygame.display.set_caption("Get Going!!!!")
  
-    while mainloop:
+    # Game loop
+    while True:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                mainloop = False 
+                return
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    mainloop = False 
+                    return
                 if event.key == pygame.K_UP:
-                    dy -= 1 
+                    player.move(0,-player.speed)
                 if event.key == pygame.K_DOWN:
-                    dy += 1
+                    player.move(0,player.speed)
                 if event.key == pygame.K_RIGHT:
-                    dx += 1
+                    player.move(player.speed,0)
                 if event.key == pygame.K_LEFT:
-                    dx -= 1
-        pygame.display.set_caption("Get Going!!!!")
+                    player.move(-player.speed,0)
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    player.movepos = [0,0]
+                    player.state = "still"
+
+        wall = WallObject()
+        wallsprite = pygame.sprite.RenderPlain(wall)
+        wall.rect.x = 0
+        wall.rect.y = 0
+
         screen.blit(background, (0,0))
-        
+        screen.blit(background, wall.rect, wall.rect)
+        playersprite.update()
+        playersprite.draw(screen)
+        wallsprite.update(player)
+        wallsprite.draw(screen)
         pygame.display.flip() 
+
 if __name__ == "__main__":
-    maze()    
+    maze()
