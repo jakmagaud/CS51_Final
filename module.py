@@ -25,6 +25,7 @@ class PlayerObject(WorldObject):
 		self.rect = self.image.get_rect()
 		self.speed = 5
 		self.movepos = [0,0]
+		self.num_lives = 3
 
 	def update(self):
 		newpos = pygame.Rect.move(self.rect, self.movepos[0],self.movepos[1])
@@ -48,7 +49,11 @@ class WallObject(WorldObject):
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
-			print "collision!"
+			COLLISION = pygame.USEREVENT + 2
+			collisionevent = pygame.event.Event(COLLISION)
+			pygame.event.post(collisionevent)
+			pygame.event.pump()
+
 
 	def to_string(self):
 		pass

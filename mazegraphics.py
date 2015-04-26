@@ -51,7 +51,9 @@ def maze():
                   "x..........x.........x",
                   "xxxxxxxxxxxxxxxxx.xxnx"]
 
-    second_level =  ["xxxxxxxxxxxxxxx",
+    second_level =  [
+                    "...............",
+                    "xxxxxxxxxxxxxxx",
                     "xs............x",
                     "x.........x...x",
                     "x.........x...x",
@@ -68,7 +70,9 @@ def maze():
                     "x.....x.......x",
                     "xxxxxxxxxxxxxxx"]
 
-    third_level = ["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    third_level = [
+                "................................",
+                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                 "xs.............................x",
                 "x..............................x",
                 "x..............................x",
@@ -118,6 +122,8 @@ def maze():
     
     clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
+    COLLISION = pygame.USEREVENT + 2
+    collisionevent = pygame.event.Event(COLLISION)
  
     # Game loop
     while True:
@@ -125,6 +131,8 @@ def maze():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            elif event.type == COLLISION:
+                print "collision!"
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
@@ -136,6 +144,15 @@ def maze():
                     player.move(player.speed,0)
                 if event.key == pygame.K_LEFT:
                     player.move(-player.speed,0)
+                """pressed = pygame.key.get_pressed()
+                if pressed[pygame.K_UP] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,-.7 * player.speed)
+                if pressed[pygame.K_UP] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,-.7 * player.speed)
+                if pressed[pygame.K_DOWN] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,.7 * player.speed)
+                if pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,.7 * player.speed)
+                if pressed[pygame.K_UP] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,-player.speed)
+                if pressed[pygame.K_DOWN] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,player.speed)
+                if pressed[pygame.K_RIGHT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(player.speed,0)
+                if pressed[pygame.K_LEFT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(-player.speed,0)"""
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
