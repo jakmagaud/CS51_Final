@@ -23,6 +23,8 @@ def maze():
  
 
     player = PlayerObject()
+    player.rect.x = 90
+    player.rect.y = 30
     playersprite = pygame.sprite.RenderPlain(player)
 
     ballsurface = pygame.Surface((10,10))
@@ -120,10 +122,17 @@ def maze():
     my_maze = all_levels[0]
     length, height, lines, columns, background, wallobjects = addlevel(my_maze)
     
+    font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
+
+    #Define custom events
     COLLISION = pygame.USEREVENT + 2
     collisionevent = pygame.event.Event(COLLISION)
+    REACHEXIT = pygame.USEREVENT + 3
+    exitevent = pygame.event.Event(REACHEXIT)
+    DEAD = pygame.USEREVENT + 4
+    deadevent = pygame.event.Event(DEAD)
  
     # Game loop
     while True:
@@ -132,7 +141,15 @@ def maze():
             if event.type == pygame.QUIT:
                 return
             elif event.type == COLLISION:
-                print "collision!"
+                player.num_lives -= 1
+                if player.num_lives <= 0:
+                    pygame.event.post(deadevent)
+                player.rect.x = 90
+                player.rect.y = 30
+                pygame.time.wait(500)
+            elif event.type == DEAD:
+                print "Game over!"
+                return 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
@@ -157,13 +174,15 @@ def maze():
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
         
-        wallsprites = pygame.sprite.RenderPlain(wallobjects)
+        text = font.render("Lives: " + str(player.num_lives),1,(10,10,10))
         screen.blit(background, (0,0))
+        screen.blit(text, text.get_rect())
+        wallsprites = pygame.sprite.RenderPlain(wallobjects)
         wallsprites.update(player)
         wallsprites.draw(screen)
         playersprite.update()
         playersprite.draw(screen)
-        pygame.display.flip() 
+        pygame.display.flip()
 
 if __name__ == "__main__":
     maze()

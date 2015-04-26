@@ -54,7 +54,6 @@ class WallObject(WorldObject):
 			pygame.event.post(collisionevent)
 			pygame.event.pump()
 
-
 	def to_string(self):
 		pass
 
