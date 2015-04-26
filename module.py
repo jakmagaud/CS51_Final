@@ -20,7 +20,7 @@ class PlayerObject(WorldObject):
 
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load("player.png")
+		self.image = pygame.image.load("Images/player.png")
 		self.rect = self.image.get_rect()
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
@@ -46,7 +46,7 @@ class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load("wall.png")
+		self.image = pygame.image.load("Images/wall.png")
 		self.rect = self.image.get_rect()
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
