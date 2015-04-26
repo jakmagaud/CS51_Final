@@ -12,7 +12,7 @@ def maze():
     import random
  
     pygame.init()
-    screen=pygame.display.set_mode((640,480)) 
+    screen=pygame.display.set_mode((640,465)) 
     screenrect = screen.get_rect()
     background = pygame.Surface((screen.get_size()))
     backgroundrect = background.get_rect()
@@ -33,7 +33,9 @@ def maze():
     background.blit(ballsurface, (5,5))
 
 
-    first_level = ["xxx.xxxxxxxxxxxxxxxxxx",
+    first_level = [
+                  "......................",
+                  "xxx.xxxxxxxxxxxxxxxxxx",
                   ".s.....x..............",
                   "xxxx.........xx......x",
                   "x......x....x.x......x",
@@ -84,13 +86,6 @@ def maze():
                 "x..............................x",
                 "x..............................x",
                 "xxxxxxpxxxxxxxxxxxnxxxxxxxxxxxex"]
- 
- 
-    def createblock(length, height, color):
-        tempblock = pygame.Surface((length, height))
-        tempblock.fill(color)
-        tempblock.convert()
-        return tempblock
 
     def addlevel(level):
  
@@ -99,10 +94,7 @@ def maze():
  
         length = screenrect.width / columns
         height = screenrect.height / lines
-        print length
-        print height
 
-        #wallblock = createblock(length, height,(0,0,0))
         wallobjects = []
 
         background = background0.copy()
@@ -110,16 +102,13 @@ def maze():
         for y in range(lines):
             for x in range(columns):
                 if level[y][x] == "x": # wall
-                    #background.blit(wallblock, (length * x, height * y))
                     wall = WallObject()
                     wallobjects.append(wall)
                     wall.rect.x = length * x
                     wall.rect.y = length * y
                     screen.blit(background, wall.rect, wall.rect)
-                    """ballx = length * x
-                    bally = height * y"""
+
         screen.blit(background0, (0,0))
- 
         return length, height, lines, columns, background, wallobjects
  
     all_levels = [first_level, second_level, third_level]  
@@ -147,21 +136,12 @@ def maze():
                     player.move(player.speed,0)
                 if event.key == pygame.K_LEFT:
                     player.move(-player.speed,0)
-
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
-                    player.state = "still"
-
-        """wall = WallObject()
-        wallsprite = pygame.sprite.RenderPlain(wall)
-        wall.rect.x = 50
-        wall.rect.y = 50
-        print wall.rect"""
+        
         wallsprites = pygame.sprite.RenderPlain(wallobjects)
-
         screen.blit(background, (0,0))
-        #screen.blit(background, wall.rect, wall.rect)
         wallsprites.update(player)
         wallsprites.draw(screen)
         playersprite.update()

@@ -9,7 +9,9 @@ class WorldObject(pygame.sprite.Sprite):
 	__metaclass__ = ABCMeta
 
 	def __init__(self):
-		pass
+		pygame.sprite.Sprite.__init__(self)
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
 
 	@abstractmethod
 	def to_string(self):
@@ -17,15 +19,11 @@ class WorldObject(pygame.sprite.Sprite):
 
 class PlayerObject(WorldObject):
 	"""The player-controlled object"""
-
 	def __init__(self):
-		pygame.sprite.Sprite.__init__(self)
+		WorldObject.__init__(self)
 		self.image = pygame.image.load("Images/player.png")
 		self.rect = self.image.get_rect()
-		screen = pygame.display.get_surface()
-		self.area = screen.get_rect()
 		self.speed = 5
-		self.state = "still"
 		self.movepos = [0,0]
 
 	def update(self):
@@ -37,19 +35,16 @@ class PlayerObject(WorldObject):
 	def move(self, dx, dy):
 		self.movepos[0] += dx
 		self.movepos[1] += dy
-		self.state = "move"
 
 	def to_string(self):
-		pass
+		return "x position: "  + self.rect.x + "y position: "  + self.rect.y
 
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
 	def __init__(self):
-		pygame.sprite.Sprite.__init__(self)
+		WorldObject.__init__(self)
 		self.image = pygame.image.load("Images/wall.png")
 		self.rect = self.image.get_rect()
-		screen = pygame.display.get_surface()
-		self.area = screen.get_rect()
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
