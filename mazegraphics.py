@@ -42,11 +42,11 @@ def maze():
                   "x......x......x......x",
                   "x...xxxxxx....x......x",
                   "x......x.............x",
-                  "x......x...s..xxxxxxxx",
+                  "x......x...2..xxxxxxxx",
                   "xxxxxx.x.............x",
                   "x......x.............x",
                   "x......x.............x",
-                  "x..s.......xxxx...xxxx",
+                  "x..1.......xxxx...xxxx",
                   "x..........x.........x",
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
@@ -54,13 +54,13 @@ def maze():
                   "......................",
                   "xxxpxxxxxxxxxxxxxxxxxx",
                   "x.............x......x",
-                  "x..s.......x..x......x",
+                  "x..........x..x......x",
                   "x.......x..x..xxxxxxxx",
                   "x......x...x...xx....x",
-                  "x..s..xxxxxx....x....x",
+                  "x..1..xxxxxx....x....x",
                   "x......x........x....x",
                   "x.x.....x.......xx...x",
-                  "x.x..........s.......x",                   
+                  "x.x..........2.......x",                   
                   "x.x....x.............x",
                   "x.x.....x...xxxxxxxxxx",
                   "x.xxxxxxxx..x......xxx",
@@ -111,8 +111,14 @@ def maze():
                     wall.rect.x = length * x
                     wall.rect.y = length * y
                     screen.blit(background, wall.rect, wall.rect)
-                elif level[y][x] == "s": #enemy
-                    enemy = EnemyObject()
+                elif level[y][x] == "1": #enemy
+                    enemy = BasicEnemyObject()
+                    enemyobjects.append(enemy)
+                    enemy.rect.x = length * x
+                    enemy.rect.y = length * y
+                    screen.blit(background, enemy.rect, enemy.rect)
+                elif level[y][x] == "2":
+                    enemy = FastEnemyObject()
                     enemyobjects.append(enemy)
                     enemy.rect.x = length * x
                     enemy.rect.y = length * y
@@ -197,7 +203,7 @@ def maze():
             exitsprite = pygame.sprite.RenderPlain(exitobject)
             exitsprite.update(player)
             exitsprite.draw(screen)
-        
+
         wallsprites = pygame.sprite.RenderPlain(wallobjects)
         wallsprites.update(player)
         wallsprites.draw(screen)

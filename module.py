@@ -76,7 +76,7 @@ class ExitObject(WorldObject):
 	def to_string(self):
 		pass
 
-class EnemyObject(WorldObject):
+class BasicEnemyObject(WorldObject):
 	"""Object representing enemy"""
 	def __init__(self):
 		WorldObject.__init__(self)
@@ -84,10 +84,6 @@ class EnemyObject(WorldObject):
 		self.rect = self.image.get_rect()
 		self.speed = 6
 		self.angle = math.radians(random.randint(0, 359))
-	"""
-	def move(self, dx, dy):
-		self.rect.x += dx
-		self.rect.y += dy"""
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
@@ -111,3 +107,13 @@ class EnemyObject(WorldObject):
 	def to_string(self):
 		pass
 
+class FastEnemyObject(BasicEnemyObject):
+	def __init__(self):
+		BasicEnemyObject.__init__(self)
+		self.image = pygame.image.load("Images/fast.png")
+		self.rect = self.image.get_rect()
+		self.speed = 12
+		self.angle = math.radians(random.randrange(0, 361, 90))
+
+	def to_string(self):
+		pass
