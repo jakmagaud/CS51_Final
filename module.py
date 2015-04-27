@@ -49,9 +49,9 @@ class WallObject(WorldObject):
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
-			COLLISION = pygame.USEREVENT + 2
-			collisionevent = pygame.event.Event(COLLISION)
-			pygame.event.post(collisionevent)
+			PLAYERCOLLISION = pygame.USEREVENT + 2
+			playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
+			pygame.event.post(playercollisionevent)
 			pygame.event.pump()
 
 	def to_string(self):
@@ -74,3 +74,19 @@ class ExitObject(WorldObject):
 	def to_string(self):
 		pass
 
+class EnemyObject(WorldObject):
+	"""Object representing enemy"""
+	def __init__(self):
+		WorldObject.__init__(self)
+		self.image = pygame.image.load("Images/enemy.png")
+		self.rect = self.image.get_rect()
+
+	def move(self, dx, dy):
+		pass
+
+	def update(self, player):
+		if self.rect.colliderect(player.rect) == 1:
+			PLAYERCOLLISION = pygame.USEREVENT + 2
+			playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
+			pygame.event.post(playercollisionevent)
+			pygame.event.pump()

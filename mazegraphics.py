@@ -19,8 +19,9 @@ def maze():
  
 
     player = PlayerObject()
-    player.rect.x = 95
-    player.rect.y = 30
+    start_pos = (93,35)
+    player.rect.x = start_pos[0]
+    player.rect.y = start_pos[1]
     playersprite = pygame.sprite.RenderPlain(player)
 
     ballsurface = pygame.Surface((10,10))
@@ -32,7 +33,7 @@ def maze():
 
 
     first_level = [
-                  "......................",
+                  "...x..................",
                   "xxxpxxxxxxxxxxxxxxxxxx",
                   ".......x..............",
                   "xxxx.........xx......x",
@@ -50,22 +51,22 @@ def maze():
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
     second_level =  [
-                    "....................",
-                    "xxxpxxxxxxxxxxxxxxxx",
-                    "x............x.....x",
-                    "x.........x..x.....x",
-                    "x......x..x..xxxxxxx",
-                    "x.....x...x...xx...x",
-                    "x..p.xxxxxx....x...x",
-                    "x.....x........x...x",
-                    "x.x....x.......xx..x",
-                    "x.x................x",                   
-                    "x.x...x............x",
-                    "x.x....x...xxxxxxxxx",
-                    "x.xxxxxxx..x......xx",
-                    "x......x.......xx.ex",
-                    "x.............xxxxxx",
-                    "xxxxxxxxxxxxxxxxxxxx"]
+                  "......................",
+                  "xxxpxxxxxxxxxxxxxxxxxx",
+                  "x.............x......x",
+                  "x..........x..x......x",
+                  "x.......x..x..xxxxxxxx",
+                  "x......x...x...xx....x",
+                  "x.....xxxxxx....x....x",
+                  "x......x........x....x",
+                  "x.x.....x.......xx...x",
+                  "x.x..................x",                   
+                  "x.x....x.............x",
+                  "x.x.....x...xxxxxxxxxx",
+                  "x.xxxxxxxx..x......xxx",
+                  "x.......x.......xx.exx",
+                  "x..............xxxxxxx",
+                  "xxxxxxxxxxxxxxxxxxxxxx"]
 
     third_level = [
                 "................................",
@@ -128,8 +129,8 @@ def maze():
     pygame.display.set_caption("Get Going!!!!")
 
     #Define custom events
-    COLLISION = pygame.USEREVENT + 2
-    collisionevent = pygame.event.Event(COLLISION)
+    PLAYERCOLLISION = pygame.USEREVENT + 2
+    playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
     REACHEXIT = pygame.USEREVENT + 3
     exitevent = pygame.event.Event(REACHEXIT)
     DEAD = pygame.USEREVENT + 4
@@ -141,25 +142,25 @@ def maze():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            elif event.type == COLLISION:
+            elif event.type == PLAYERCOLLISION:
                 player.num_lives -= 1
                 if player.num_lives <= 0:
                     pygame.event.post(deadevent)
-                player.rect.x = 95
-                player.rect.y = 30
+                player.rect.x = start_pos[0]
+                player.rect.y = start_pos[1]
                 pygame.time.wait(500)
             elif event.type == REACHEXIT:
                 print "Success!"
                 screen.fill((255,255,255))
                 my_maze = all_levels[1]
                 length, height, lines, columns, background, wallobjects, exitobject = addlevel(my_maze)
-                player.rect.x = 95
-                player.rect.y = 30
+                player.rect.x = start_pos[0]
+                player.rect.y = start_pos[1]
             elif event.type == DEAD:
                 print "Game over!"
                 return 
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                """if event.key == pygame.K_ESCAPE:
                     return
                 if event.key == pygame.K_UP:
                     player.move(0,-player.speed)
@@ -168,16 +169,16 @@ def maze():
                 if event.key == pygame.K_RIGHT:
                     player.move(player.speed,0)
                 if event.key == pygame.K_LEFT:
-                    player.move(-player.speed,0)
-                """pressed = pygame.key.get_pressed()
-                if pressed[pygame.K_UP] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,-.7 * player.speed)
+                    player.move(-player.speed,0)"""
+                pressed = pygame.key.get_pressed()
+                """if pressed[pygame.K_UP] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,-.7 * player.speed)
                 if pressed[pygame.K_UP] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,-.7 * player.speed)
                 if pressed[pygame.K_DOWN] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,.7 * player.speed)
-                if pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,.7 * player.speed)
+                if pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,.7 * player.speed)"""
                 if pressed[pygame.K_UP] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,-player.speed)
                 if pressed[pygame.K_DOWN] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,player.speed)
                 if pressed[pygame.K_RIGHT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(player.speed,0)
-                if pressed[pygame.K_LEFT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(-player.speed,0)"""
+                if pressed[pygame.K_LEFT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(-player.speed,0)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
