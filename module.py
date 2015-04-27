@@ -57,3 +57,20 @@ class WallObject(WorldObject):
 	def to_string(self):
 		pass
 
+class ExitObject(WorldObject):
+	"""Object representing the exit"""
+	def __init__(self):
+		WorldObject.__init__(self)
+		self.image = pygame.image.load("Images/exit.png")
+		self.rect = self.image.get_rect()
+
+	def update(self, player):
+		if self.rect.colliderect(player.rect) == 1:
+			REACHEXIT = pygame.USEREVENT + 3
+			exitevent = pygame.event.Event(REACHEXIT)
+			pygame.event.post(exitevent)
+			pygame.event.pump()
+
+	def to_string(self):
+		pass
+
