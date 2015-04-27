@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Wanna try escape the maze???
-"""   
-from Tkinter import *
 from module import *
 
 def maze():
@@ -12,7 +8,7 @@ def maze():
     import random
  
     pygame.init()
-    screen=pygame.display.set_mode((640,465)) 
+    screen = pygame.display.set_mode((640,465)) 
     screenrect = screen.get_rect()
     background = pygame.Surface((screen.get_size()))
     backgroundrect = background.get_rect()
