@@ -2,6 +2,8 @@
 #Objects
 from abc import ABCMeta, abstractmethod
 import pygame
+import random
+import math
 
 #Abstract class representing object in the world
 class WorldObject(pygame.sprite.Sprite):
@@ -80,13 +82,32 @@ class EnemyObject(WorldObject):
 		WorldObject.__init__(self)
 		self.image = pygame.image.load("Images/enemy.png")
 		self.rect = self.image.get_rect()
-
+		self.speed = 6
+		self.angle = math.radians(random.randint(0, 359))
+	"""
 	def move(self, dx, dy):
-		pass
+		self.rect.x += dx
+		self.rect.y += dy"""
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
 			PLAYERCOLLISION = pygame.USEREVENT + 2
 			playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
 			pygame.event.post(playercollisionevent)
-			pygame.event.pump()
+		newpos = pygame.Rect.move(self.rect, self.speed * math.cos(self.angle), self.speed * math.sin(self.angle))
+		if self.area.contains(newpos):
+			self.rect = newpos
+		else:
+			topleft = not self.area.collidepoint(newpos.topleft)
+			topright = not self.area.collidepoint(newpos.topright)
+			bottomleft = not self.area.collidepoint(newpos.bottomleft)
+			bottomright = not self.area.collidepoint(newpos.bottomright)
+			if topright and topleft or (bottomright and bottomleft):
+				self.angle = -self.angle
+			if topleft and bottomleft or (topright and bottomright):
+				self.angle = math.pi - self.angle
+		pygame.event.pump()
+
+	def to_string(self):
+		pass
+

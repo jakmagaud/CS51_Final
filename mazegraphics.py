@@ -42,11 +42,11 @@ def maze():
                   "x......x......x......x",
                   "x...xxxxxx....x......x",
                   "x......x.............x",
-                  "x......x......xxxxxxxx",
+                  "x......x...s..xxxxxxxx",
                   "xxxxxx.x.............x",
                   "x......x.............x",
                   "x......x.............x",
-                  "x..........xxxx...xxxx",
+                  "x..s.......xxxx...xxxx",
                   "x..........x.........x",
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
@@ -54,13 +54,13 @@ def maze():
                   "......................",
                   "xxxpxxxxxxxxxxxxxxxxxx",
                   "x.............x......x",
-                  "x..........x..x......x",
+                  "x..s.......x..x......x",
                   "x.......x..x..xxxxxxxx",
                   "x......x...x...xx....x",
-                  "x.....xxxxxx....x....x",
+                  "x..s..xxxxxx....x....x",
                   "x......x........x....x",
                   "x.x.....x.......xx...x",
-                  "x.x..................x",                   
+                  "x.x..........s.......x",                   
                   "x.x....x.............x",
                   "x.x.....x...xxxxxxxxxx",
                   "x.xxxxxxxx..x......xxx",
@@ -98,6 +98,7 @@ def maze():
         height = screenrect.height / lines
 
         wallobjects = []
+        enemyobjects = []
 
         background = background0.copy()
         exit = None
@@ -110,6 +111,12 @@ def maze():
                     wall.rect.x = length * x
                     wall.rect.y = length * y
                     screen.blit(background, wall.rect, wall.rect)
+                elif level[y][x] == "s": #enemy
+                    enemy = EnemyObject()
+                    enemyobjects.append(enemy)
+                    enemy.rect.x = length * x
+                    enemy.rect.y = length * y
+                    screen.blit(background, enemy.rect, enemy.rect)
                 elif level[y][x] == "e": #exit
                     exit = ExitObject()
                     exit.rect.x = length * x
@@ -117,12 +124,12 @@ def maze():
                     screen.blit(background, exit.rect, exit.rect)
 
         screen.blit(background0, (0,0))
-        return length, height, lines, columns, background, wallobjects, exit
+        return length, height, lines, columns, background, wallobjects, enemyobjects, exit
  
     all_levels = [first_level, second_level, third_level]  
     max_levels = len(all_levels)        
     my_maze = all_levels[0]
-    length, height, lines, columns, background, wallobjects, exitobject = addlevel(my_maze)
+    length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
     
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
@@ -153,7 +160,7 @@ def maze():
                 print "Success!"
                 screen.fill((255,255,255))
                 my_maze = all_levels[1]
-                length, height, lines, columns, background, wallobjects, exitobject = addlevel(my_maze)
+                length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
                 player.rect.x = start_pos[0]
                 player.rect.y = start_pos[1]
             elif event.type == DEAD:
@@ -190,9 +197,13 @@ def maze():
             exitsprite = pygame.sprite.RenderPlain(exitobject)
             exitsprite.update(player)
             exitsprite.draw(screen)
+        
         wallsprites = pygame.sprite.RenderPlain(wallobjects)
         wallsprites.update(player)
         wallsprites.draw(screen)
+        enemysprites = pygame.sprite.RenderPlain(enemyobjects)
+        enemysprites.update(player)
+        enemysprites.draw(screen)
         playersprite.update()
         playersprite.draw(screen)
         pygame.display.flip()
