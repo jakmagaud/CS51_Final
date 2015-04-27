@@ -117,7 +117,7 @@ def maze():
                     enemy.rect.x = length * x
                     enemy.rect.y = length * y
                     screen.blit(background, enemy.rect, enemy.rect)
-                elif level[y][x] == "2":
+                elif level[y][x] == "2": #fast enemy
                     enemy = FastEnemyObject()
                     enemyobjects.append(enemy)
                     enemy.rect.x = length * x
