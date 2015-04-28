@@ -68,7 +68,7 @@ class BasicEnemyObject(WorldObject):
 		WorldObject.__init__(self)
 		self.image = pygame.image.load("Images/enemy.png")
 		self.rect = self.image.get_rect()
-		self.speed = 0#6
+		self.speed = 6
 		self.angle = math.radians(random.randint(0, 359))
 
 	def update(self, player):
@@ -95,7 +95,7 @@ class FastEnemyObject(BasicEnemyObject):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/fast.png")
 		self.rect = self.image.get_rect()
-		self.speed = 0#12
+		self.speed = 12
 		self.angle = math.radians(random.randrange(0, 361, 90))
 
 class LockOnEnemyObject(BasicEnemyObject):
@@ -103,7 +103,7 @@ class LockOnEnemyObject(BasicEnemyObject):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/lockon.png")
 		self.rect = self.image.get_rect()
-		self.speed = 0#2
+		self.speed = 2
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
