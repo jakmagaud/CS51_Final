@@ -51,7 +51,7 @@ def maze():
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
     second_level =  [
-                  "......................",
+                  "...x..................",
                   "xxxpxxxxxxxxxxxxxxxxxx",
                   "x.............x......x",
                   "x..........x..x......x",
@@ -69,25 +69,22 @@ def maze():
                   "xxxxxxxxxxxxxxxxxxxxxx"]
 
     third_level = [
-                "................................",
-                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                "xs.............................x",
-                "x..............................x",
-                "x..............................x",
-                "x............xxx....xxx........x",
-                "x...........xx.xx..xx.xx.......x",
-                "x............xxx....xxx........x",
-                "x..............................x",
-                "x................x.............x",
-                "x................x.............x",
-                "x................x.............x",
-                "x..............................x",
-                "x................r.............x",
-                "x............xx....xxx.........x",
-                "x.............xxxxxxx..........x",
-                "x..............................x",
-                "x..............................x",
-                "xxxxxxpxxxxxxxxxxxnxxxxxxxxxxxex"]
+                  "...x..................",
+                  "xxxpxxxxxxxxxxxxxxxxxx",
+                  "x....................x",
+                  "x....................x",
+                  "...xxx....xxx........x",
+                  "x.xx.xx..xx.xx.......x",
+                  "x..xxx....xxx........x",
+                  "x....................x",
+                  "x......x.............x",
+                  "x......x.............x",
+                  "x......x.............x",
+                  "x....................x",
+                  "x......1.............x",
+                  "x..xx....xxx.........x",
+                  "x3..xxxxxxx..........x",
+                  "xxxxxxxxxxxxxxxxxxxxex"]
 
     def addlevel(level):
  
@@ -145,12 +142,6 @@ def maze():
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
-
-    def reset(level):
-        screen.fill((255,255,255))
-        length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(level)
-        player.rect.x = start_pos[0]
-        player.rect.y = start_pos[1]
 
     #Define custom events
     PLAYERCOLLISION = pygame.USEREVENT + 2
