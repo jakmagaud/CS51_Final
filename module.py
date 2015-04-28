@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#Objects
 from abc import ABCMeta, abstractmethod
 import pygame
 import random
@@ -14,10 +13,6 @@ class WorldObject(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
-
-	@abstractmethod
-	def to_string(self):
-		pass
 
 class PlayerObject(WorldObject):
 	"""The player-controlled object"""
@@ -39,9 +34,6 @@ class PlayerObject(WorldObject):
 		self.movepos[0] += dx
 		self.movepos[1] += dy
 
-	def to_string(self):
-		return "x position: "  + self.rect.x + "y position: "  + self.rect.y
-
 class WallObject(WorldObject):
 	"""Object representing the walls the player must avoid"""
 	def __init__(self):
@@ -56,9 +48,6 @@ class WallObject(WorldObject):
 			pygame.event.post(playercollisionevent)
 			pygame.event.pump()
 
-	def to_string(self):
-		pass
-
 class ExitObject(WorldObject):
 	"""Object representing the exit"""
 	def __init__(self):
@@ -72,9 +61,6 @@ class ExitObject(WorldObject):
 			exitevent = pygame.event.Event(REACHEXIT)
 			pygame.event.post(exitevent)
 			pygame.event.pump()
-
-	def to_string(self):
-		pass
 
 class BasicEnemyObject(WorldObject):
 	"""Object representing enemy"""
@@ -104,9 +90,6 @@ class BasicEnemyObject(WorldObject):
 				self.angle = math.pi - self.angle
 		pygame.event.pump()
 
-	def to_string(self):
-		pass
-
 class FastEnemyObject(BasicEnemyObject):
 	def __init__(self):
 		BasicEnemyObject.__init__(self)
@@ -115,15 +98,12 @@ class FastEnemyObject(BasicEnemyObject):
 		self.speed = 12
 		self.angle = math.radians(random.randrange(0, 361, 90))
 
-	def to_string(self):
-		pass
-
 class LockOnEnemyObject(BasicEnemyObject):
 	def __init__(self, player):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/lockon.png")
 		self.rect = self.image.get_rect()
-		self.speed = 2
+		self.speed = 1.5
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
@@ -131,10 +111,7 @@ class LockOnEnemyObject(BasicEnemyObject):
 			playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
 			pygame.event.post(playercollisionevent)
 		dx, dy = player.rect.x - self.rect.x, player.rect.y - self.rect.y
-		distance = math.hypot(dx,dy)
+		distance = math.hypot(dx,dy) + .01 #Add .01 to avoid division by zero
 		self.rect.x += dx * self.speed / distance
 		self.rect.y += dy * self.speed / distance
 		pygame.event.pump()
-
-	def to_string(self):
-		pass

@@ -19,7 +19,7 @@ def maze():
  
 
     player = PlayerObject()
-    start_pos = (93,35)
+    start_pos = (90,35)
     player.rect.x = start_pos[0]
     player.rect.y = start_pos[1]
     playersprite = pygame.sprite.RenderPlain(player)
@@ -137,15 +137,20 @@ def maze():
 
         screen.blit(background0, (0,0))
         return length, height, lines, columns, background, wallobjects, enemyobjects, exit
- 
-    all_levels = [first_level, second_level, third_level]  
-    max_levels = len(all_levels)        
+
+    all_levels = [first_level, second_level, third_level]
     my_maze = all_levels[0]
     length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
     
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
     pygame.display.set_caption("Get Going!!!!")
+
+    def reset(level):
+        screen.fill((255,255,255))
+        length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(level)
+        player.rect.x = start_pos[0]
+        player.rect.y = start_pos[1]
 
     #Define custom events
     PLAYERCOLLISION = pygame.USEREVENT + 2
@@ -154,6 +159,7 @@ def maze():
     exitevent = pygame.event.Event(REACHEXIT)
     DEAD = pygame.USEREVENT + 4
     deadevent = pygame.event.Event(DEAD)
+    cur_level = 0
  
     # Game loop
     while True:
@@ -165,19 +171,29 @@ def maze():
                 player.num_lives -= 1
                 if player.num_lives <= 0:
                     pygame.event.post(deadevent)
+                screen.fill((255,255,255))
+                my_maze = all_levels[cur_level]
+                length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
                 player.rect.x = start_pos[0]
                 player.rect.y = start_pos[1]
                 pygame.time.wait(500)
             elif event.type == REACHEXIT:
                 print "Success!"
+                cur_level += 1
                 screen.fill((255,255,255))
-                my_maze = all_levels[1]
+                if cur_level < len(all_levels): my_maze = all_levels[cur_level]
                 length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
                 player.rect.x = start_pos[0]
                 player.rect.y = start_pos[1]
+                pygame.event.clear(REACHEXIT)
             elif event.type == DEAD:
                 print "Game over!"
-                return 
+                screen.fill((255,255,255))
+                font = pygame.font.Font(None, 64)
+                text = font.render("Game Over",1,(10,10,10))
+                screen.blit(background, (0,0))
+                screen.blit(text, text.get_rect())
+                return
             elif event.type == pygame.KEYDOWN:
                 """if event.key == pygame.K_ESCAPE:
                     return
@@ -209,7 +225,6 @@ def maze():
             exitsprite = pygame.sprite.RenderPlain(exitobject)
             exitsprite.update(player)
             exitsprite.draw(screen)
-
         wallsprites = pygame.sprite.RenderPlain(wallobjects)
         wallsprites.update(player)
         wallsprites.draw(screen)
