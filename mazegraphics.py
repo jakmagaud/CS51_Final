@@ -19,7 +19,7 @@ def maze():
  
 
     player = PlayerObject()
-    start_pos = (90,35)
+    start_pos = (95,40)
     player.rect.x = start_pos[0]
     player.rect.y = start_pos[1]
     playersprite = pygame.sprite.RenderPlain(player)
@@ -78,7 +78,7 @@ def maze():
                   "x....xxx....xxx......x",
                   "x....................x",
                   "x........x...........x",
-                  "x........x...........x",
+                  "x.......xxx..........x",
                   "x........x...........x",
                   "x....................x",
                   "x........1...........x",
