@@ -117,3 +117,24 @@ class FastEnemyObject(BasicEnemyObject):
 
 	def to_string(self):
 		pass
+
+class LockOnEnemyObject(BasicEnemyObject):
+	def __init__(self, player):
+		BasicEnemyObject.__init__(self)
+		self.image = pygame.image.load("Images/lockon.png")
+		self.rect = self.image.get_rect()
+		self.speed = 2
+
+	def update(self, player):
+		if self.rect.colliderect(player.rect) == 1:
+			PLAYERCOLLISION = pygame.USEREVENT + 2
+			playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
+			pygame.event.post(playercollisionevent)
+		dx, dy = player.rect.x - self.rect.x, player.rect.y - self.rect.y
+		distance = math.hypot(dx,dy)
+		self.rect.x += dx * self.speed / distance
+		self.rect.y += dy * self.speed / distance
+		pygame.event.pump()
+
+	def to_string(self):
+		pass

@@ -44,7 +44,7 @@ def maze():
                   "x......x.............x",
                   "x......x...2..xxxxxxxx",
                   "xxxxxx.x.............x",
-                  "x......x.............x",
+                  "x......x..........3..x",
                   "x......x.............x",
                   "x..1.......xxxx...xxxx",
                   "x..........x.........x",
@@ -119,6 +119,12 @@ def maze():
                     screen.blit(background, enemy.rect, enemy.rect)
                 elif level[y][x] == "2": #fast enemy
                     enemy = FastEnemyObject()
+                    enemyobjects.append(enemy)
+                    enemy.rect.x = length * x
+                    enemy.rect.y = length * y
+                    screen.blit(background, enemy.rect, enemy.rect)
+                elif level[y][x] == "3": #lockon enemy
+                    enemy = LockOnEnemyObject(player)
                     enemyobjects.append(enemy)
                     enemy.rect.x = length * x
                     enemy.rect.y = length * y
