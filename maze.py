@@ -1,5 +1,3 @@
-from mazegraphics import *
-from module import *
 """
 from random import shuffle, randrange
  
@@ -29,7 +27,7 @@ make_maze()
 import random
 
 def make_maze(w, h):
-    edges = [[0 for x in range(w)] for x in range(h)]
+    edges = [[0 for x in range(h)] for x in range(w)]
     max = 100
     for col in range(w):
         for row in range(h):
@@ -63,15 +61,21 @@ def make_maze(w, h):
             path(minimum[2],minimum[3])
     
     path(0,0)
-    print edges
-    
+    #print edges
+    mazestring = []
+
     for i in range(w):
+        mazestring.append("")
         for j in range(h):
             if edges[i][j][1]:
+                mazestring[i] += "x"
                 print "x",
             else:
+                mazestring[i] += "."
                 print ".",
         print ""
+
+    print mazestring
     
-make_maze(10,10)
+make_maze(22,16)
 
