@@ -74,7 +74,7 @@ def make_maze(w, h):
                 print ".",
         print ""
 
-    topline = "......................"
+    topline = "............1.2.....3."
     mazestring.insert(0, topline) 
     print mazestring
     return mazestring
