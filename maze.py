@@ -61,7 +61,6 @@ def make_maze(w, h):
             path(minimum[2],minimum[3])
     
     path(0,0)
-    #print edges
     mazestring = []
 
     for i in range(w):
@@ -75,7 +74,10 @@ def make_maze(w, h):
                 print ".",
         print ""
 
+    topline = "......................"
+    mazestring.insert(0, topline) 
     print mazestring
+    return mazestring
     
-make_maze(22,16)
+maze = make_maze(15,22)
 

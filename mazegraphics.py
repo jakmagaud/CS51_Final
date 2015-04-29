@@ -20,7 +20,7 @@ def maze():
  
 
     player = PlayerObject()
-    start_pos = (95,40)
+    start_pos = (0,40)
     player.rect.x = start_pos[0]
     player.rect.y = start_pos[1]
     playersprite = pygame.sprite.RenderPlain(player)
@@ -34,8 +34,8 @@ def maze():
 
 
     first_level = [
-                  "...x..................",
-                  "xxxpxxxxxxxxxxxxxxxxxx",
+                  "......................",
+                  ".xxxxxxxxxxxxxxxxxxxxx",
                   ".......x..............",
                   "xxxx.........xx......x",
                   "x......x....x.x......x",
@@ -52,8 +52,8 @@ def maze():
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
     second_level =  [
-                  "...x..................",
-                  "xxxpxxxxxxxxxxxxxxxxxx",
+                  "......................",
+                  "..xxxxxxxxxxxxxxxxxxxx",
                   "x.............x......x",
                   "x..........x..x......x",
                   "x.......x..x..xxxxxxxx",
@@ -69,23 +69,24 @@ def maze():
                   "x..............xxxxxxx",
                   "xxxxxxxxxxxxxxxxxxxxxx"]
 
-    third_level = [
-                  "...x..................",
-                  "xxxpxxxxxxxxxxxxxxxxxx",
-                  "x....................x",
-                  "x....................x",
-                  "x....xxx....xxx......x",
-                  "x...xx.xx..xx.xx.....x",
-                  "x....xxx....xxx......x",
-                  "x....................x",
-                  "x........x...........x",
-                  "x.......xxx..........x",
-                  "x........x...........x",
-                  "x....................x",
-                  "x........1...........x",
-                  "x....xx....xxx.......x",
-                  "x3....xxxxxxx........x",
-                  "xxxxxxxxxxxxxxxxxxxxex"]
+    third_level = make_maze(15,22)
+    """[
+    "...x..................",
+    "xxxpxxxxxxxxxxxxxxxxxx",
+    "x....................x",
+    "x....................x",
+    "x....xxx....xxx......x",
+    "x...xx.xx..xx.xx.....x",
+    "x....xxx....xxx......x",
+    "x....................x",
+    "x........x...........x",
+    "x.......xxx..........x",
+    "x........x...........x",
+    "x....................x",
+    "x........1...........x",
+    "x....xx....xxx.......x",
+    "x3....xxxxxxx........x",
+    "xxxxxxxxxxxxxxxxxxxxex"]"""
 
     def addlevel(level):
  

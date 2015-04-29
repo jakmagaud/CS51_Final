@@ -103,7 +103,7 @@ class LockOnEnemyObject(BasicEnemyObject):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/lockon.png")
 		self.rect = self.image.get_rect()
-		self.speed = 2
+		self.speed = 1
 
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
