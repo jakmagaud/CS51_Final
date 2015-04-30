@@ -49,6 +49,15 @@ def make_maze(w, h):
             results.append(edges[x][y-1])
         return results
     
+    def endpoint():
+        results = []
+        for i in range(w - 7, w):
+            for j in range(h - 7, h):
+                if edges[i][j][1] == False :
+                    results.append(edges[i][j])
+        index = random.randint(0, len(results)-1)
+        edges[results[index][2]][results[index][3]] = (101, False, results[index][2], results[index][3])
+                    
     #all_adjacent shouldn't need any arguments and should
     #return all edge elements that are adjacent to any existing path edge
     def all_adjacent():
@@ -75,6 +84,7 @@ def make_maze(w, h):
             #print adjacents
             path()
     path()
+    endpoint()
     
     mazestring = []
 
@@ -84,6 +94,9 @@ def make_maze(w, h):
             if edges[i][j][1]:
                 mazestring[i] += "x"
                 print "x",
+            elif edges[i][j][0] == 101:
+                mazestring[i] += "e"
+                print "e",
             else:
                 mazestring[i] += "."
                 print ".",
