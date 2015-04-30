@@ -67,7 +67,6 @@ def make_maze(w, h):
         
         adjacents = list(chain.from_iterable(all_adjacent()[0]))
         num = all_adjacent()[1]
-        print num
         
         if (len(adjacents) + num) == (w * h):
             return
@@ -96,5 +95,5 @@ def make_maze(w, h):
     print mazestring
     return mazestring
     
-maze = make_maze(22,15)
+maze = make_maze(15,22)
 

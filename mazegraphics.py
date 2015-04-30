@@ -32,8 +32,7 @@ def maze():
     ballrect = ballsurface.get_rect()
     background.blit(ballsurface, (5,5))
 
-
-    first_level = [
+    backup_level1 = [
                   "......................",
                   ".xxxxxxxxxxxxxxxxxxxxx",
                   ".......x..............",
@@ -51,42 +50,30 @@ def maze():
                   "x..........x.........x",
                   "xxxxxxxxxxxxxxxxxxxxex"]
 
-    second_level =  [
+    backup_level2 =  [
                   "......................",
                   "..xxxxxxxxxxxxxxxxxxxx",
-                  "x.............x......x",
-                  "x..........x..x......x",
+                  "....xxx.......x......x",
+                  "x....x.....x..x......x",
                   "x.......x..x..xxxxxxxx",
-                  "x......x...x...xx....x",
+                  "x......x...x...xx...3x",
                   "x..1..xxxxxx....x....x",
                   "x......x........x....x",
-                  "x.x.....x.......xx...x",
-                  "x.x..........2.......x",                   
-                  "x.x....x.............x",
+                  "x.xxx...x.......xx...x",
+                  "x.x.x........2....x..x",                   
+                  "x.x....x.......x.....x",
                   "x.x.....x...xxxxxxxxxx",
-                  "x.xxxxxxxx..x......xxx",
-                  "x.......x.......xx.exx",
-                  "x..............xxxxxxx",
+                  "x.xxxxxxxx..xx.....xxx",
+                  "x.......x...x...xx.exx",
+                  "x..xx..........xxxxxxx",
                   "xxxxxxxxxxxxxxxxxxxxxx"]
 
-    third_level = make_maze(15,22)
-    """[
-    "...x..................",
-    "xxxpxxxxxxxxxxxxxxxxxx",
-    "x....................x",
-    "x....................x",
-    "x....xxx....xxx......x",
-    "x...xx.xx..xx.xx.....x",
-    "x....xxx....xxx......x",
-    "x....................x",
-    "x........x...........x",
-    "x.......xxx..........x",
-    "x........x...........x",
-    "x....................x",
-    "x........1...........x",
-    "x....xx....xxx.......x",
-    "x3....xxxxxxx........x",
-    "xxxxxxxxxxxxxxxxxxxxex"]"""
+    first_level = make_maze(15,22)
+    second_level = make_maze(15,22)
+    if first_level[1] == "......................":
+      first_level = backup_level1
+    if second_level[1] == "......................":
+      second_level = backup_level2
 
     def addlevel(level):
  
@@ -137,7 +124,7 @@ def maze():
         screen.blit(background0, (0,0))
         return length, height, lines, columns, background, wallobjects, enemyobjects, exit
 
-    all_levels = [first_level, second_level, third_level]
+    all_levels = [first_level, second_level]
     my_maze = all_levels[0]
     length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
     
