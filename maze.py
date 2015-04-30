@@ -64,11 +64,11 @@ def make_maze(w, h):
     edges[0][0] = (0, False, 0, 0)
     
     def path():
-        
         adjacents = list(chain.from_iterable(all_adjacent()[0]))
         num = all_adjacent()[1]
+        print num
         
-        if (len(adjacents) + num) == (w * h):
+        if (len(adjacents) + num) == (w * h) or num >= 200:
             return
         elif min(adjacents):
             minimum = min(adjacents)
