@@ -23,12 +23,13 @@ def make_maze(w = 16, h = 8):
  
 make_maze()
 """
-
+from itertools import chain
 import random
 
 def make_maze(w, h):
     edges = [[0 for x in range(h)] for x in range(w)]
     max = 100
+    
     for col in range(w):
         for row in range(h):
             edges[col][row] = (random.randint(1,max), True, col, row)
@@ -48,19 +49,35 @@ def make_maze(w, h):
             results.append(edges[x][y-1])
         return results
     
+    #all_adjacent shouldn't need any arguments and should
+    #return all edge elements that are adjacent to any existing path edge
+    def all_adjacent():
+        results = []
+        counter = 0
+        for i in range(w):
+            for j in range(h):
+                if edges[i][j][1] == False :
+                    results.append(adjacent(i, j))
+                    counter += 1
+        return (results, counter)
+    
     edges[0][0] = (0, False, 0, 0)
     
-    def path(x, y):
+    def path():
         
-        adjacents = adjacent(x, y)
-        if not(adjacents):
+        adjacents = list(chain.from_iterable(all_adjacent()[0]))
+        num = all_adjacent()[1]
+        print num
+        
+        if (len(adjacents) + num) == (w * h):
             return
-        else:
+        elif min(adjacents):
             minimum = min(adjacents)
             edges[minimum[2]][minimum[3]] = (0, False, minimum[2], minimum[3])
-            path(minimum[2],minimum[3])
+            #print adjacents
+            path()
+    path()
     
-    path(0,0)
     mazestring = []
 
     for i in range(w):
@@ -79,5 +96,5 @@ def make_maze(w, h):
     print mazestring
     return mazestring
     
-maze = make_maze(15,22)
+maze = make_maze(22,15)
 
