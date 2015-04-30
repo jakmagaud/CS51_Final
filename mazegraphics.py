@@ -199,10 +199,6 @@ def maze():
                 if event.key == pygame.K_LEFT:
                     player.move(-player.speed,0)"""
                 pressed = pygame.key.get_pressed()
-                """if pressed[pygame.K_UP] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,-.7 * player.speed)
-                if pressed[pygame.K_UP] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,-.7 * player.speed)
-                if pressed[pygame.K_DOWN] and pressed[pygame.K_LEFT]: player.move(-.7 * player.speed,.7 * player.speed)
-                if pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]: player.move(.7 * player.speed,.7 * player.speed)"""
                 if pressed[pygame.K_UP] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,-player.speed)
                 if pressed[pygame.K_DOWN] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,player.speed)
                 if pressed[pygame.K_RIGHT] and not(pressed[pygame.K_DOWN]) and not(pressed[pygame.K_UP]): player.move(player.speed,0)

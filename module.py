@@ -18,6 +18,7 @@ class PlayerObject(WorldObject):
 	"""The player-controlled object"""
 	def __init__(self):
 		WorldObject.__init__(self)
+		#Load image, set rectangle for collision detection, set speed, set lives
 		self.image = pygame.image.load("Images/player.png")
 		self.rect = self.image.get_rect()
 		self.speed = 5
