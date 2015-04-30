@@ -66,7 +66,6 @@ def make_maze(w, h):
     def path():
         adjacents = list(chain.from_iterable(all_adjacent()[0]))
         num = all_adjacent()[1]
-        print num
         
         if (len(adjacents) + num) == (w * h) or num >= 200:
             return
@@ -92,7 +91,7 @@ def make_maze(w, h):
 
     topline = "............1.2.....3."
     mazestring.insert(0, topline) 
-    print mazestring
+    #print mazestring
     return mazestring
     
 maze = make_maze(15,22)
