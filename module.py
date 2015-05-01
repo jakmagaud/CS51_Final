@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#This file defines all the objects using in the game
 from abc import ABCMeta, abstractmethod
 import pygame
 import random
