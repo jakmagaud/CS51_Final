@@ -145,7 +145,6 @@ def maze():
                 pygame.time.wait(500)
             #If player reaches exit, load next level, reset to starting position
             elif event.type == REACHEXIT:
-                print "Success!"
                 cur_level += 1
                 screen.fill((255,255,255))
                 if cur_level < len(all_levels): my_maze = all_levels[cur_level]
