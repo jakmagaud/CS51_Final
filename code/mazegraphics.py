@@ -54,6 +54,9 @@ def maze():
     #Generate string representation of levels using maze algorithm from maze.py
     first_level = make_maze(15,22)
     second_level = make_maze(15,22)
+    third_level = make_maze(15,22)
+    fourth_level = make_maze(15,22)
+    fifth_level = make_maze(15,22)
     if first_level[1] == "......................":
       first_level = backup_level
 
@@ -107,7 +110,7 @@ def maze():
         screen.blit(background0, (0,0))
         return length, height, lines, columns, background, wallobjects, enemyobjects, exit
 
-    all_levels = [first_level, second_level]
+    all_levels = [first_level, second_level, third_level, fourth_level, fifth_level]
     my_maze = all_levels[0]
     length, height, lines, columns, background, wallobjects, enemyobjects, exitobject = addlevel(my_maze)
     
