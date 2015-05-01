@@ -115,7 +115,7 @@ def maze():
     clock = pygame.time.Clock()
     pygame.display.set_caption("Solve the Maze!")
 
-    #Define custom events
+    #Define custom events for collision, reaching end of level and dying
     PLAYERCOLLISION = pygame.USEREVENT + 2
     playercollisionevent = pygame.event.Event(PLAYERCOLLISION)
     REACHEXIT = pygame.USEREVENT + 3
@@ -128,10 +128,11 @@ def maze():
     while True:
         #set FPS
         clock.tick(60)
-        #Respond to events
+        #Respond to events in queue
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            #If player collides with wall or enemy, reset to starting position, decrement lives, and either continue with game or fire deadevent
             elif event.type == PLAYERCOLLISION:
                 player.num_lives -= 1
                 if player.num_lives <= 0:
@@ -142,6 +143,7 @@ def maze():
                 player.rect.x = start_pos[0]
                 player.rect.y = start_pos[1]
                 pygame.time.wait(500)
+            #If player reaches exit, load next level, reset to starting position
             elif event.type == REACHEXIT:
                 print "Success!"
                 cur_level += 1
@@ -151,6 +153,7 @@ def maze():
                 player.rect.x = start_pos[0]
                 player.rect.y = start_pos[1]
                 pygame.event.clear(REACHEXIT)
+            #If player is dead, game over
             elif event.type == DEAD:
                 print "Game over!"
                 screen.fill((255,255,255))
@@ -159,6 +162,7 @@ def maze():
                 screen.blit(background, (0,0))
                 screen.blit(text, text.get_rect())
                 return
+            #Player movement responds to keyboard events
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
@@ -171,6 +175,7 @@ def maze():
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
         
+        #Render text and sprites, draw to screen and redraw for each iteration of the game loop
         text = font.render("Level: "  + str(cur_level + 1) + "  Lives: " + str(player.num_lives),1,(10,10,10))
         screen.blit(background, (0,0))
         screen.blit(text, text.get_rect())
