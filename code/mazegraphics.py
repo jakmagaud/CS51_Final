@@ -116,7 +116,7 @@ def maze():
     
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
-    pygame.display.set_caption("Solve the Maze!")
+    pygame.display.set_caption("Mazerunner")
 
     #Define custom events for collision, reaching end of level and dying
     PLAYERCOLLISION = pygame.USEREVENT + 2
