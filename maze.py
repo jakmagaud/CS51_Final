@@ -43,13 +43,13 @@ def make_maze(w, h):
             results.append(edges[x][y-1])
         return results
     
-    #endpoint takes a point in the 7x7 grid block farthest from the starting
+    #endpoint takes a point in the 9x9 grid block farthest from the starting
     #point and chooses a path element within the block at random to be the 
     #ending point
     def endpoint():
         results = []
-        for i in range(w - 7, w):
-            for j in range(h - 7, h):
+        for i in range(w - 9, w):
+            for j in range(h - 9, h):
                 if edges[i][j][1] == False :
                     results.append(edges[i][j])
         index = random.randint(0, len(results)-1)
