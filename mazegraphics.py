@@ -8,6 +8,7 @@ def maze():
     import pygame
     import random
  
+    #Initialize window, fill screen, create background, and prepare for drawing
     pygame.init()
     screen = pygame.display.set_mode((640,465)) 
     screenrect = screen.get_rect()
@@ -17,8 +18,8 @@ def maze():
     background = background.convert()
     background0 = background.copy()
     screen.blit(background,(0,0))
- 
 
+    #Initializer player, set position and create sprite
     player = PlayerObject()
     start_pos = (0,40)
     player.rect.x = start_pos[0]
@@ -32,25 +33,7 @@ def maze():
     ballrect = ballsurface.get_rect()
     background.blit(ballsurface, (5,5))
 
-    backup_level1 = [
-                  "......................",
-                  ".xxxxxxxxxxxxxxxxxxxxx",
-                  ".......x..............",
-                  "xxxx.........xx......x",
-                  "x......x....x.x......x",
-                  "x......x......x......x",
-                  "x......x......x......x",
-                  "x...xxxxxx....x......x",
-                  "x......x.............x",
-                  "x......x...2..xxxxxxxx",
-                  "xxxxxx.x.............x",
-                  "x......x..........3..x",
-                  "x......x.............x",
-                  "x..1.......xxxx...xxxx",
-                  "x..........x.........x",
-                  "xxxxxxxxxxxxxxxxxxxxex"]
-
-    backup_level2 =  [
+    backup_level =  [
                   "......................",
                   "..xxxxxxxxxxxxxxxxxxxx",
                   "....xxx.......x......x",
@@ -68,13 +51,13 @@ def maze():
                   "x..xx..........xxxxxxx",
                   "xxxxxxxxxxxxxxxxxxxxxx"]
 
+    #Generate string representation of levels using maze algorithm from maze.py
     first_level = make_maze(15,22)
     second_level = make_maze(15,22)
     if first_level[1] == "......................":
-      first_level = backup_level1
-    if second_level[1] == "......................":
-      second_level = backup_level2
+      first_level = backup_level
 
+    #Draw level using string representation generated above
     def addlevel(level):
  
         lines = len(level)
@@ -130,7 +113,7 @@ def maze():
     
     font = pygame.font.Font(None, 32)
     clock = pygame.time.Clock()
-    pygame.display.set_caption("Get Going!!!!")
+    pygame.display.set_caption("Solve the Maze!")
 
     #Define custom events
     PLAYERCOLLISION = pygame.USEREVENT + 2
@@ -143,7 +126,9 @@ def maze():
  
     # Game loop
     while True:
+        #set FPS
         clock.tick(60)
+        #Respond to events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -175,16 +160,8 @@ def maze():
                 screen.blit(text, text.get_rect())
                 return
             elif event.type == pygame.KEYDOWN:
-                """if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE:
                     return
-                if event.key == pygame.K_UP:
-                    player.move(0,-player.speed)
-                if event.key == pygame.K_DOWN:
-                    player.move(0,player.speed)
-                if event.key == pygame.K_RIGHT:
-                    player.move(player.speed,0)
-                if event.key == pygame.K_LEFT:
-                    player.move(-player.speed,0)"""
                 pressed = pygame.key.get_pressed()
                 if pressed[pygame.K_UP] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,-player.speed)
                 if pressed[pygame.K_DOWN] and not(pressed[pygame.K_RIGHT]) and not(pressed[pygame.K_LEFT]): player.move(0,player.speed)
@@ -194,7 +171,7 @@ def maze():
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.movepos = [0,0]
         
-        text = font.render("Lives: " + str(player.num_lives),1,(10,10,10))
+        text = font.render("Level: "  + str(cur_level + 1) + "  Lives: " + str(player.num_lives),1,(10,10,10))
         screen.blit(background, (0,0))
         screen.blit(text, text.get_rect())
         if not(exitobject == None):

@@ -15,22 +15,25 @@ class WorldObject(pygame.sprite.Sprite):
 		self.area = screen.get_rect()
 
 class PlayerObject(WorldObject):
-	"""The player-controlled object"""
+	"""The player-controlled object: initializes using super class constructor, then loads image, sets rectangle for collision detection, sets speed, 
+	and sets lives
+	"""
 	def __init__(self):
 		WorldObject.__init__(self)
-		#Load image, set rectangle for collision detection, set speed, set lives
 		self.image = pygame.image.load("Images/player.png")
 		self.rect = self.image.get_rect()
 		self.speed = 5
 		self.movepos = [0,0]
 		self.num_lives = 3
 
+	"""Updates player to respond to movement events"""
 	def update(self):
 		newpos = pygame.Rect.move(self.rect, self.movepos[0],self.movepos[1])
 		if self.area.contains(newpos):
 			self.rect = newpos
 		pygame.event.pump()
 
+	"""Moves player sprite"""
 	def move(self, dx, dy):
 		self.movepos[0] += dx
 		self.movepos[1] += dy
@@ -42,6 +45,7 @@ class WallObject(WorldObject):
 		self.image = pygame.image.load("Images/wall.png")
 		self.rect = self.image.get_rect()
 
+	"""Wall responds to collision with player, fires event to decrease number of lives and/or end game"""
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
 			PLAYERCOLLISION = pygame.USEREVENT + 2
@@ -56,6 +60,7 @@ class ExitObject(WorldObject):
 		self.image = pygame.image.load("Images/exit.png")
 		self.rect = self.image.get_rect()
 
+	"""Responds to collision with player, fires event to advance to next level"""
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
 			REACHEXIT = pygame.USEREVENT + 3
@@ -64,7 +69,7 @@ class ExitObject(WorldObject):
 			pygame.event.pump()
 
 class BasicEnemyObject(WorldObject):
-	"""Object representing enemy"""
+	"""Basic bject representing enemy, bounces around walls until it hits the player"""
 	def __init__(self):
 		WorldObject.__init__(self)
 		self.image = pygame.image.load("Images/enemy.png")
@@ -72,6 +77,7 @@ class BasicEnemyObject(WorldObject):
 		self.speed = 6
 		self.angle = math.radians(random.randint(0, 359))
 
+	"""Basic enemy moves at set speed around window, bouncing off edges"""
 	def update(self, player):
 		if self.rect.colliderect(player.rect) == 1:
 			PLAYERCOLLISION = pygame.USEREVENT + 2
@@ -92,14 +98,15 @@ class BasicEnemyObject(WorldObject):
 		pygame.event.pump()
 
 class FastEnemyObject(BasicEnemyObject):
+	"""Faster enemy that is twice as fast, otherwise behaves like basic enemy"""
 	def __init__(self):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/fast.png")
 		self.rect = self.image.get_rect()
 		self.speed = 12
-		self.angle = math.radians(random.randrange(0, 361, 90))
 
 class LockOnEnemyObject(BasicEnemyObject):
+	"""Slower enemy that chases the player, otherwise behaves like basic enemy"""
 	def __init__(self, player):
 		BasicEnemyObject.__init__(self)
 		self.image = pygame.image.load("Images/lockon.png")
